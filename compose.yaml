@@ -1,0 +1,13 @@
+services:
+  app:
+    build: .
+    ports: ["127.0.0.1:8085:8000"]
+    volumes: ["./data:/app/data"]
+    env_file: .env
+    environment:
+      # 1 vCPU: numpy/scikit-learn com 1 thread só
+      OMP_NUM_THREADS: "1"
+      OPENBLAS_NUM_THREADS: "1"
+    # a máquina tem 4 GB pra tudo; se o r8 passar disso o Docker mata e reinicia ele
+    mem_limit: 640m
+    restart: unless-stopped
